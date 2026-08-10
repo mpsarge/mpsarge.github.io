@@ -170,6 +170,17 @@ h1, h2, h3, h4 {
 .checklist-badge__dot.complete { background: var(--ok); }
 .checklist-badge__count { color: var(--silver-500); font-variant-numeric: tabular-nums; }
 
+.admin-link {
+  color: var(--silver-700);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 6px 4px;
+  flex-shrink: 0;
+}
+.admin-link:hover { color: var(--silver-300); text-decoration: none; }
+.admin-link.active { color: var(--accent-bright); }
+
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -513,6 +524,7 @@ button:hover, .btn:hover { border-color: var(--accent); color: var(--accent-brig
 .attest-row__why { color: var(--silver-500); font-size: 12.5px; margin-top: 3px; }
 
 .option-card {
+  display: block;
   border: 1px solid var(--panel-border);
   border-radius: var(--radius);
   padding: 12px 14px;
@@ -520,7 +532,7 @@ button:hover, .btn:hover { border-color: var(--accent); color: var(--accent-brig
   background: var(--panel-raised);
 }
 .option-card.selected { border-color: var(--accent-bright); background: var(--accent-dim); }
-.option-card h4 { margin: 0 0 4px; font-size: 13.5px; color: var(--silver-100); }
+.option-card h4 { margin: 0 0 4px; font-size: 13.5px; color: var(--silver-100); display: block; }
 .option-card p { margin: 0; font-size: 12.5px; color: var(--silver-500); }
 .option-card + .option-card { margin-top: 8px; }
 

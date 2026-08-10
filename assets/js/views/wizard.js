@@ -350,6 +350,27 @@ const STEPS = [
   },
 ];
 
+// Some wizard steps assume specific "backbone" equipment items exist (by
+// name) to build their controls around — e.g. the radome step needs the
+// rigid/air-supported/space-frame rows to exist to offer that choice. Since
+// equipment data can now be edited or deleted via the Admin panel, a step
+// whose backbone item was renamed or removed would otherwise throw and take
+// the whole page down with it. Contain that to a friendly message instead.
+function renderStepBody(step, store) {
+  try {
+    return step.body(store.state, store);
+  } catch (err) {
+    console.error(`[wizard] step "${step.id}" failed to render:`, err);
+    return `
+      <div class="card">
+        <p style="color:var(--danger);">This step can't render right now — an equipment item it depends on may have
+        been renamed or removed in Admin. Check <a href="#/equipment">Equipment &amp; Packing</a>, or continue to
+        another step.</p>
+      </div>
+    `;
+  }
+}
+
 export function render(container, { store }) {
   function draw() {
     const saved = captureFocus(container);
@@ -375,7 +396,7 @@ export function render(container, { store }) {
         ).join('')}
       </div>
 
-      ${step.body(store.state, store)}
+      ${renderStepBody(step, store)}
 
       <div class="wizard-nav">
         <button type="button" class="btn" data-prev ${stepIndex === 0 ? 'disabled' : ''}>← Back</button>

@@ -5,26 +5,32 @@
  */
 import { EQUIPMENT } from './data.js';
 
+// Guards every predicate against a row with a missing/non-string `item` -
+// live-synced data is validated at the database level (schema.sql declares
+// `item text not null`), but this module's lookups run eagerly at import
+// time, before any view exists to show an error, so a bad row here must
+// degrade to "not found" rather than throw and take the whole app down.
+const startsWith = (str, prefix) => typeof str === 'string' && str.startsWith(prefix);
 const find = (pred) => EQUIPMENT.find(pred);
 
 export const ANTENNA_APERTURE_IDS = EQUIPMENT.filter(
-  (e) => e.category === 'Antenna & Tracking Systems' && !e.item.startsWith('Quick-Change Feed Pallet Set')
+  (e) => e.category === 'Antenna & Tracking Systems' && !startsWith(e.item, 'Quick-Change Feed Pallet Set')
 ).map((e) => e.id);
 
 export const KEY_ITEMS = {
-  avlDish: find((e) => e.item.startsWith('Mechanically-Positioned Dish')),
-  feedPallets: find((e) => e.item.startsWith('Quick-Change Feed Pallet Set')),
-  sBand: find((e) => e.item.startsWith('Dedicated S-Band')),
-  radomeRigid: find((e) => e.item.startsWith('Rigid Self-Supporting')),
-  radomeAir: find((e) => e.item.startsWith('Air-Supported')),
-  radomeCompressor: find((e) => e.item.startsWith('High-CFM Inflation Compressor')),
-  radomeSpaceFrame: find((e) => e.item.startsWith('Rigid Space-Frame Radome')),
-  shelterFabric: find((e) => e.item.startsWith('Expandable Fabric Shelter')),
-  shelterRigid: find((e) => e.item.startsWith('Rigid-Wall Expandable Shelter')),
-  ecpTent: find((e) => e.item.startsWith('Entry Control Point Module - tent-integrated')),
-  ecpIsu: find((e) => e.item.startsWith('Entry Control Point Module - ISU-90')),
-  ats: find((e) => e.item.startsWith('Automatic Transfer Switch')),
-  grounding: find((e) => e.item.startsWith('Antenna/Mast Grounding')),
+  avlDish: find((e) => startsWith(e.item, 'Mechanically-Positioned Dish')),
+  feedPallets: find((e) => startsWith(e.item, 'Quick-Change Feed Pallet Set')),
+  sBand: find((e) => startsWith(e.item, 'Dedicated S-Band')),
+  radomeRigid: find((e) => startsWith(e.item, 'Rigid Self-Supporting')),
+  radomeAir: find((e) => startsWith(e.item, 'Air-Supported')),
+  radomeCompressor: find((e) => startsWith(e.item, 'High-CFM Inflation Compressor')),
+  radomeSpaceFrame: find((e) => startsWith(e.item, 'Rigid Space-Frame Radome')),
+  shelterFabric: find((e) => startsWith(e.item, 'Expandable Fabric Shelter')),
+  shelterRigid: find((e) => startsWith(e.item, 'Rigid-Wall Expandable Shelter')),
+  ecpTent: find((e) => startsWith(e.item, 'Entry Control Point Module - tent-integrated')),
+  ecpIsu: find((e) => startsWith(e.item, 'Entry Control Point Module - ISU-90')),
+  ats: find((e) => startsWith(e.item, 'Automatic Transfer Switch')),
+  grounding: find((e) => startsWith(e.item, 'Antenna/Mast Grounding')),
   chairs: find((e) => e.item === 'Folding Field Chair'),
 };
 

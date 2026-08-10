@@ -1,6 +1,7 @@
 import { EQUIPMENT, CONTAINER_SPEC } from '../data.js';
 import { suggestedLoadPlan, optimizedLoadPlan } from '../packing.js';
 import { fmtLb, fmtVol, fmtPct, clamp01, escapeHtml } from '../format.js';
+import { suggestCorrectionUrl } from '../github-issue.js';
 
 function barClass(frac) {
   if (frac > 1) return 'danger';
@@ -132,6 +133,7 @@ function rowHtml(item, qty) {
         <p><strong>Cons:</strong> ${escapeHtml(item.cons)}</p>
         <p><strong>Notes:</strong> ${escapeHtml(item.notes)}</p>
         <p><strong>Source:</strong> ${escapeHtml(item.source)}</p>
+        <p><a href="${suggestCorrectionUrl({ itemLabel: item.item, itemId: item.id, currentData: item })}" target="_blank" rel="noopener">Suggest a correction ↗</a></p>
       </div>
     </div>
   `;

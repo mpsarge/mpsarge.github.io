@@ -43,6 +43,8 @@
         <span class="checklist-badge__count" id="checklist-count">0/0</span>
       </a>
 
+      <a class="admin-link" href="#/admin" data-route="admin" title="Admin">Admin</a>
+
       <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav-mobile">
         <span></span><span></span><span></span>
         <span class="sr-only">Toggle navigation</span>
@@ -55,6 +57,7 @@
       <a href="#/power" data-route="power">Power &amp; Thermal</a>
       <a href="#/antenna" data-route="antenna">Antenna &amp; Radome</a>
       <a href="#/checklist" data-route="checklist">Design Checklist</a>
+      <a href="#/admin" data-route="admin">Admin</a>
     </nav>
   </header>
 
@@ -64,7 +67,9 @@
     All figures are engineering estimates &mdash; verify against vendor datasheets and unit SOPs before real-world use.
   </div>
 
-  <main id="app-main" class="app-main" tabindex="-1"></main>
+  <main id="app-main" class="app-main" tabindex="-1">
+    <p style="color:var(--silver-500); padding-top:40px; text-align:center;">Loading&hellip;</p>
+  </main>
 
   <footer class="site-footer">
     <div class="site-footer__inner">

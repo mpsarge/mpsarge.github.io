@@ -35,9 +35,15 @@ function ecuStatus(runningBtu, heatLoad) {
   return { status: 'OK', statusLabel: 'OK - comfortable margin', level: 'ok' };
 }
 
+// A row this calculator depends on by id (sensor, it-load, lighting-hotel,
+// backup-comms) can go missing if the backend's power_load_items table is
+// ever edited down to fewer rows than expected. Fall back to an inert
+// zero-contribution stub rather than crashing the whole app on a missing key.
+const MISSING_ROW_STUB = { typicalSubtotal: 0, maxSubtotal: 0, typicalW: 0, maxW: 0, qty: 0 };
+
 export function thermalBudget(state) {
   const load = electricalLoad(state.loadQty || {});
-  const findRow = (id) => load.rows.find((r) => r.id === id);
+  const findRow = (id) => load.rows.find((r) => r.id === id) ?? { ...MISSING_ROW_STUB, id };
 
   const itLoad = findRow('it-load');
   const lighting = findRow('lighting-hotel');

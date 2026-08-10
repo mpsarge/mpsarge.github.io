@@ -1,5 +1,10 @@
 import { ANTENNA_COMPARISON, RADOME_COMPARISON } from '../data.js';
 import { escapeHtml } from '../format.js';
+import { suggestCorrectionUrl } from '../github-issue.js';
+
+function correctLink(itemLabel, itemId, currentData) {
+  return `<a href="${suggestCorrectionUrl({ itemLabel, itemId, currentData })}" target="_blank" rel="noopener" style="font-size:11.5px; white-space:nowrap;">Suggest a correction ↗</a>`;
+}
 
 export function render(container) {
   container.innerHTML = `
@@ -17,7 +22,7 @@ export function render(container) {
           <thead>
             <tr>
               <th>System</th><th>Architecture</th><th>Band Coverage</th><th>Orbital Regimes</th>
-              <th>Pack / Transport Form</th><th>Pros</th><th>Cons</th><th>Source</th>
+              <th>Pack / Transport Form</th><th>Pros</th><th>Cons</th><th>Source</th><th></th>
             </tr>
           </thead>
           <tbody>
@@ -32,6 +37,7 @@ export function render(container) {
                 <td style="min-width:220px; color:var(--silver-300);">${escapeHtml(a.pros)}</td>
                 <td style="min-width:220px; color:var(--silver-500);">${escapeHtml(a.cons)}</td>
                 <td style="min-width:120px; color:var(--silver-500);">${escapeHtml(a.source)}</td>
+                <td style="min-width:140px;">${correctLink(a.system, a.id, a)}</td>
               </tr>
             `
             ).join('')}
@@ -45,7 +51,7 @@ export function render(container) {
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>System</th><th>Structure Type</th><th>Continuous Power?</th><th>Setup Time</th><th>Pros</th><th>Cons</th><th>Source</th></tr>
+            <tr><th>System</th><th>Structure Type</th><th>Continuous Power?</th><th>Setup Time</th><th>Pros</th><th>Cons</th><th>Source</th><th></th></tr>
           </thead>
           <tbody>
             ${RADOME_COMPARISON.map(
@@ -58,6 +64,7 @@ export function render(container) {
                 <td style="min-width:220px; color:var(--silver-300);">${escapeHtml(r.pros)}</td>
                 <td style="min-width:220px; color:var(--silver-500);">${escapeHtml(r.cons)}</td>
                 <td style="min-width:120px; color:var(--silver-500);">${escapeHtml(r.source)}</td>
+                <td style="min-width:140px;">${correctLink(r.system, r.id, r)}</td>
               </tr>
             `
             ).join('')}
