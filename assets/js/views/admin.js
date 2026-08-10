@@ -25,8 +25,27 @@ const TABLES = {
       { key: 'item', label: 'Item', type: 'text', required: true },
       { key: 'vendor', label: 'Vendor / Model', type: 'text' },
       { key: 'default_qty', label: 'Default Qty', type: 'number' },
-      { key: 'unit_weight', label: 'Unit Weight (lb)', type: 'number' },
-      { key: 'unit_volume', label: 'Unit Volume (cu ft)', type: 'number' },
+      {
+        key: 'unit_weight',
+        label: 'Unit Weight (lb)',
+        type: 'number',
+        help: 'From a scale, per unit. Weight can’t be reliably derived from dimensions alone, so this is always entered directly — it’s what the ISU-90 10,000 lb capacity check uses.',
+      },
+      {
+        key: 'length_in',
+        label: 'Case Length (in)',
+        type: 'number',
+        help: 'Outer shipping-case dimensions from a tape measure. Optional — only used to calculate Unit Volume below.',
+      },
+      { key: 'width_in', label: 'Case Width (in)', type: 'number' },
+      { key: 'height_in', label: 'Case Height (in)', type: 'number' },
+      {
+        key: 'unit_volume',
+        label: 'Unit Volume (cu ft)',
+        type: 'number',
+        help: 'Per unit. Use "Calculate from dimensions" above once L/W/H are filled in, or enter cubic feet directly.',
+        extraControl: 'calc-volume',
+      },
       { key: 'transport', label: 'Transport', type: 'text' },
       { key: 'container', label: 'Assigned Container', type: 'select', options: CONTAINER_OPTIONS, required: true },
       { key: 'pros', label: 'Pros', type: 'textarea' },
@@ -130,6 +149,13 @@ function formHtml(tableKey, row, isNew) {
           <div style="${f.type === 'textarea' ? 'grid-column: 1 / -1;' : ''}">
             <label style="display:block; font-size:11.5px; color:var(--silver-500); margin-bottom:4px;">${escapeHtml(f.label)}${f.required ? ' *' : ''}</label>
             ${fieldInput(f, row[f.key], { locked: !isNew && f.lockOnEdit })}
+            ${f.help ? `<p style="font-size:11px; color:var(--silver-700); margin:4px 0 0;">${escapeHtml(f.help)}</p>` : ''}
+            ${
+              f.extraControl === 'calc-volume'
+                ? `<button type="button" class="btn" data-calc-volume style="margin-top:6px; font-size:12px; padding:4px 10px;">Calculate from L × W × H</button>
+                   <span id="calc-volume-msg" style="font-size:11px; color:var(--silver-500); margin-left:8px;"></span>`
+                : ''
+            }
           </div>
         `
           )
@@ -323,6 +349,25 @@ export function render(container) {
       activeTable = tableBtn.dataset.adminTable;
       editing = null;
       loadRows();
+      return;
+    }
+
+    if (t.matches('[data-calc-volume]')) {
+      const formEl = document.getElementById('admin-form');
+      const len = Number(formEl.querySelector('[data-field="length_in"]')?.value);
+      const wid = Number(formEl.querySelector('[data-field="width_in"]')?.value);
+      const hei = Number(formEl.querySelector('[data-field="height_in"]')?.value);
+      const msgEl = document.getElementById('calc-volume-msg');
+      if (![len, wid, hei].every((n) => Number.isFinite(n) && n > 0)) {
+        msgEl.textContent = 'Enter length, width, and height (inches) first.';
+        msgEl.style.color = 'var(--danger)';
+        return;
+      }
+      const cuFt = (len * wid * hei) / 1728; // 1728 cu in per cu ft
+      const volumeInput = formEl.querySelector('[data-field="unit_volume"]');
+      volumeInput.value = cuFt.toFixed(2);
+      msgEl.textContent = `Set to ${cuFt.toFixed(2)} cu ft (${len}" × ${wid}" × ${hei}" ÷ 1728).`;
+      msgEl.style.color = 'var(--ok)';
       return;
     }
 

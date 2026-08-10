@@ -129,6 +129,11 @@ function rowHtml(item, qty) {
       <div class="equip-row__total" data-total="${item.id}">${fmtLb(total.weight)}<br>${fmtVol(total.volume)}</div>
       <div class="item-details" id="details-${item.id}">
         <p><strong>Assigned to:</strong> ${escapeHtml(item.container)} &middot; <strong>Transport:</strong> ${escapeHtml(item.transport)}</p>
+        ${
+          item.lengthIn && item.widthIn && item.heightIn
+            ? `<p><strong>Case dimensions:</strong> ${item.lengthIn}&Prime; &times; ${item.widthIn}&Prime; &times; ${item.heightIn}&Prime; (L &times; W &times; H)</p>`
+            : ''
+        }
         <p><strong>Pros:</strong> ${escapeHtml(item.pros)}</p>
         <p><strong>Cons:</strong> ${escapeHtml(item.cons)}</p>
         <p><strong>Notes:</strong> ${escapeHtml(item.notes)}</p>

@@ -81,8 +81,27 @@ Commit and deploy. On next load, the site fetches live data from Supabase
 add, edit, or delete equipment and comparison-table rows — changes are live
 for every visitor immediately.
 
+## Updating an already-provisioned project
+
+`backend/schema.sql` is safe to re-run any time this repo adds a new column
+or table — `create table if not exists` and `alter table ... add column if
+not exists` mean re-running it against a project you already set up just
+adds what's missing, without touching existing rows or clobbering your RLS
+policies (those get dropped and recreated with the same UID each time, which
+is a no-op if nothing changed). If you're not sure whether you're up to
+date, it's always safe to just paste the current file into the SQL Editor
+and run it again.
+
 ## Notes
 
+- Equipment rows have optional `length_in` / `width_in` / `height_in`
+  columns (outer shipping-case dimensions in inches) purely as a convenience
+  in the Admin panel — fill them in and click **Calculate from L × W × H**
+  to fill in Unit Volume (cubic feet) for you, instead of doing the division
+  by hand. Unit Weight is never derived from dimensions and always stays a
+  direct-entry field (a scale reading) — it's what the ISU-90 10,000 lb
+  capacity check actually uses, and there's no reliable way to infer an
+  item's real weight from its outer case size.
 - Nothing here is required for the "Suggest a correction" links scattered
   through the Equipment and Antenna & Radome pages — those just open a
   pre-filled GitHub Issue on this repo and work with zero setup.
