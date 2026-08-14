@@ -1,0 +1,12 @@
+{
+  "name": "ISR Site-in-a-Box",
+  "short_name": "ISR Site-in-a-Box",
+  "description": "Unofficial ISU-90 container packing and ISR site setup planner.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#05070c",
+  "theme_color": "#05070c",
+  "icons": [
+    { "src": "assets/img/favicon.svg", "type": "image/svg+xml", "sizes": "any" }
+  ]
+}

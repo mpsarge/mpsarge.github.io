@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ISR Site-in-a-Box &mdash; ISU-90 Packing &amp; Site Setup Planner</title>
+  <meta name="description" content="Unofficial planning tool for packing ISU-90 containers and standing up a rapidly deployable ES collection site: equipment selection, container load plans, power/thermal budget, and a guided site-setup checklist." />
+  <meta name="color-scheme" content="dark" />
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#app-main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="#/overview" aria-label="ISR Site-in-a-Box home">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="30" height="30">
+            <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.55"/>
+            <ellipse cx="24" cy="24" rx="21" ry="8" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.85"/>
+            <circle cx="24" cy="24" r="4.5" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="brand__text">
+          <span class="brand__title">ISR SITE-IN-A-BOX</span>
+          <span class="brand__subtitle">ISU&#8209;90 Packing &amp; Deployment Planner</span>
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Primary">
+        <a href="#/overview" data-route="overview">Overview</a>
+        <a href="#/wizard" data-route="wizard">Setup Wizard</a>
+        <a href="#/equipment" data-route="equipment">Equipment &amp; Packing</a>
+        <a href="#/power" data-route="power">Power &amp; Thermal</a>
+        <a href="#/antenna" data-route="antenna">Antenna &amp; Radome</a>
+      </nav>
+
+      <a class="checklist-badge" href="#/checklist" data-route="checklist" title="Design Checklist">
+        <span class="checklist-badge__dot" aria-hidden="true"></span>
+        <span class="checklist-badge__label">Checklist</span>
+        <span class="checklist-badge__count" id="checklist-count">0/0</span>
+      </a>
+
+      <a class="admin-link" href="#/admin" data-route="admin" title="Admin">Admin</a>
+
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav-mobile">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+    </div>
+    <nav class="main-nav main-nav--mobile" id="main-nav-mobile" aria-label="Primary mobile">
+      <a href="#/overview" data-route="overview">Overview</a>
+      <a href="#/wizard" data-route="wizard">Setup Wizard</a>
+      <a href="#/equipment" data-route="equipment">Equipment &amp; Packing</a>
+      <a href="#/power" data-route="power">Power &amp; Thermal</a>
+      <a href="#/antenna" data-route="antenna">Antenna &amp; Radome</a>
+      <a href="#/checklist" data-route="checklist">Design Checklist</a>
+      <a href="#/admin" data-route="admin">Admin</a>
+    </nav>
+  </header>
+
+  <div class="disclaimer-bar" role="note">
+    Unofficial planning tool. Not endorsed by, or affiliated with, the U.S. Space Force or the Department of Defense.
+    Visual style is inspired by DoD/USSF design conventions; no official seals, insignia, or trademarks are used.
+    All figures are engineering estimates &mdash; verify against vendor datasheets and unit SOPs before real-world use.
+  </div>
+
+  <main id="app-main" class="app-main" tabindex="-1">
+    <p style="color:var(--silver-500); padding-top:40px; text-align:center;">Loading&hellip;</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <span>ISR Site-in-a-Box &middot; ported from the &ldquo;ISR Site in a Box&rdquo; workbook, Rev. 2</span>
+      <span class="site-footer__sep">&middot;</span>
+      <span>Static, self-contained, offline-capable &mdash; no external services or tracking.</span>
+    </div>
+  </footer>
+
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>
