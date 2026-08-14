@@ -52,7 +52,6 @@ const STEPS = [
       const qtyOf = (id) => store.qtyOf(id);
       const dish = KEY_ITEMS.avlDish;
       const sBand = KEY_ITEMS.sBand;
-      const pallets = KEY_ITEMS.feedPallets;
       const count = antennaApertureCount(qtyOf);
       const sBandOn = sBand ? qtyOf(sBand.id) > 0 : false;
       return `
@@ -68,8 +67,9 @@ const STEPS = [
                   value="${store.rawQty(dish.id)}" class="qty-input input-editable" />
               </label>
               <p style="color:var(--silver-500); font-size:12.5px; margin-top:8px;">
-                Each dish covers one band at a time via quick-change feed pallets (C/X/Ku/Ka). Feed pallet
-                sets scale automatically (4 pallets per dish).
+                Each dish covers one band at a time via quick-change feed pallets (C/X/Ku/Ka). One band
+                ships bundled with each dish's base kit; the other 3 bands need an additional feed pallet
+                per dish. Pallet quantity is set independently on the Equipment &amp; Packing page.
               </p>
             </div>
             <div>
